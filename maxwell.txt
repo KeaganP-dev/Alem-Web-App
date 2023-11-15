@@ -1,0 +1,42 @@
+can't be derived: 
+Level
+Player
+Deity
+Species
+Alignment
+Name
+Power
+Agility
+Stamina
+Intelligence
+Knowledge
+Charisma
+Perception
+Spark
+Reify
+Mind
+Shift
+Time
+Life
+Transform
+Spirit
+Psyche
+Recovery Dots
+Recovery Dice
+Grievous Wounds
+Current HP
+Death Timer
+Inventory
+Copper
+Silver
+Gold
+Platinum
+SD1
+SD2
+SD3
+SD4
+SD5
+SD6
+Abilities
+
+character points (can be derived by what is increased etc)

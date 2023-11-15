@@ -1,0 +1,25 @@
+<!-- FILEPATH: /home/keagan/Documents/Alem-Web-App/main.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main Page</title>
+    </head>
+    <body>
+        <h1>Welcome, <span id="username"></span>!</h1>
+        <p>Points: <span id="points"></span></p>
+        <button onclick="window.location.href='stats.html'">Stats</button>
+        <button onclick="window.location.href='magic.html'">Magic</button>
+        <button onclick="window.location.href='character.html'">Character</button>
+        <button onclick="window.location.href='combat.html'">Combat</button>
+        <button onclick="window.location.href='other.html'">Other</button>
+
+        <script>
+            var urlParams = new URLSearchParams(window.location.search);
+            var username = urlParams.get('username');
+            localStorage.setItem('username', username);
+            document.getElementById('username').textContent = username;
+        </script>
+        <script src="parsecsv.js"></script>
+    </body>
+</html>
