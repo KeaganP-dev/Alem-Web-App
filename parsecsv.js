@@ -1,81 +1,222 @@
-  // Get the username from the URL
+ // Get the username from the URL
   urlParams = new URLSearchParams(window.location.search);
   username = localStorage.getItem('username');
+  let character = {};
+  let characters = [];
+
+  function getArmor(armors, character) {
+    //INPUT
+    //classification    ,name          ,armor type ,item value    ,charm value  ,has weight
+    //armor             ,guards armor  ,15         ,0             ,0            ,1
+
+    //OUTPUT
+    //armor type    ,name           ,physical bonus ,item value  ,charm value   ,armor penalty  ,wearable
+    //Medium        ,Guards Armor   ,4              ,0           ,0             ,10             ,true
+
+
+    let bestarmor = 0;
+    let bestarmorindex = 0;
+
+    for (let i = 0; i < armors.length; i++) {
+        console.log(armors[i]);
+
+        let armor = 0;
+        if (armors[i][2] == 0) { // Minimal armor
+            pb = Number(character.stamina) + Number(character.agility) + Number(character.power) + Number(character.dodge) + Number(character.athletics);
+            armor = Number(armors[i][2]) + Number(armors[i][3]) + Number(armors[i][4]) + pb;
+            armors[i][0] = 'Minimal(0)';
+            armors[i][2] = pb;
+            armors[i][5] = 0;
+            armors[i][6] = true;
+        } else if (armors[i][2] == 5) { // Light armor
+            pb = Number(character.stamina) + Number(character.agility) + Number(character.dodge);
+            armor = Number(armors[i][4]) + Number(armors[i][2]) + Number(armors[i][3]) + pb;
+            armors[i][0] = 'Light(5)';
+            armors[i][2] = pb;
+            armors[i][5] = 0;
+            armors[i][6] = true;
+        } else if (armors[i][2] == 15) { // Medium armor
+            pb = Number(character.stamina) + Number(character.agility) + Number(character.power);
+            armor = Number(armors[i][4]) + Number(armors[i][2]) + Number(armors[i][3]) + pb;
+            armors[i][0] = 'Medium(15)';
+            armors[i][2] = pb;
+            if (armors[i][5] == 1 && character.carry + character.stamina >= 4) { // has weight, can be carried
+                armors[i][5] = Math.max(15 - character.carry - character.stamina, 0);
+                armors[i][6] = true;
+            }
+            else if (armors[i][5] == 1) { // has weight, can't be carried
+                armors[i][5] = 10;
+                armors[i][6] = false;
+            }
+            else { //doesn't have weight
+                armors[i][5] = 0;
+                armors[i][6] = true;
+            }
+        } else if (armors[i][2] == 20) { // Heavy armor
+            pb = Number(character.stamina) + Number(character.power);
+            armor = Number(armors[i][4]) + Number(armors[i][2]) + Number(armors[i][3]) + pb;
+            armors[i][0] = 'Heavy(20)';
+            armors[i][2] = pb;
+            if (armors[i][5] == 1 && character.carry + character.stamina >= 6) { // has weight, can be carried
+                armors[i][5] = 15 - character.carry - character.stamina;
+                armors[i][6] = true;
+            }
+            else if (armors[i][5] == 1) {
+                armors[i][5] = 15;
+                armors[i][6] = false;
+            }
+            else { //doesn't have weight
+                armors[i][5] = 0;
+                armors[i][6] = true;
+            }
+        } else { // Immense armor
+            pb = Number(character.stamina);
+            armor = Number(armors[i][4]) + Number(armors[i][2]) + Number(armors[i][3]) + pb;
+            armors[i][0] = 'Immense(25)';
+            armors[i][2] = pb;
+            if (armors[i][5] == 1 && character.carry + character.stamina >= 10) { // has weight, can be carried
+                armors[i][5] = 25 - character.carry - character.stamina;
+                armors[i][6] = true;
+            }
+            else if (armors[i][5] == 1) {
+                armors[i][5] = 25;
+                armors[i][6] = false;
+            }
+            else { //doesn't have weight
+                armors[i][5] = 0;
+                armors[i][6] = true;
+            }
+        }
+        if (armor > bestarmor) {
+            bestarmor = armor;
+            bestarmorindex = i;
+        }
+    }
+
+    armors[bestarmorindex][1] = armors[bestarmorindex][1] + ' (equipped)';
+    character.armorpenalty = armors[bestarmorindex][5];
+    
+    if (character.SD6 === 'A') {
+        bestarmor += 1;
+    }
+
+    return bestarmor;
+  }
+
+  function getWeapons(weapons, character) {
+    //INPUT
+    //classification    ,name         ,weapon type  ,item value    ,charm value ,type    ,range
+    //weapon            ,atropos      ,8            ,0             ,0           ,melee   ,1
+
+    //OUTPUT
+    //weapon type    ,name      ,item value  ,charm value   ,actions    ,attack bonus   ,damage ,range
+    //Medium         ,atropos   ,0           ,0             ,1          ,7              ,1d8    ,1
+
+    for (let i = 0; i < weapons.length; i++) {
+        console.log(weapons[i]);
+        let actions = 0;
+        let attackbonus = 0;
+        let damage = 0;
+        let range = weapons[i][6];
+
+        let meleeattackbonus = Math.max(Number(character.power_melee) + Number(character.power), Number(character.agility_melee), Number(character.agility));
+        let rangedattackbonus = Math.max(Number(character.power_ranged) + Number(character.power), Number(character.agility_ranged), Number(character.agility));
+
+        if (weapons[i][5] == 'melee') {
+            attackbonus = meleeattackbonus;
+        } else if (weapons[i][5] == 'ranged') {
+            attackbonus = rangedattackbonus;
+        } else {
+            attackbonus = meleeattackbonus + " / " + rangedattackbonus;
+        }
+        console.log(weapons[i][2])
+
+        if (weapons[i][2] == 4) { // Minimal weapon
+            actions = 0.5;
+            damage = '1d4';
+            weapons[i][0] = 'Minimal';
+        } else if (weapons[i][2] == 6) { // Light weapon
+            console.log('light');
+            actions = 1;
+            damage = '1d6';
+            weapons[i][0] = 'Light';
+        } else if (weapons[i][2] == 8) { // Medium weapon
+            actions = 1;
+            damage = '1d8';
+            weapons[i][0] = 'Medium';
+        } else if (weapons[i][2] == 10) { // Heavy weapon
+            actions = 1;
+            damage = '1d10';
+            weapons[i][0] = 'Heavy';
+        } else { // Immense weapon
+            actions = 2;
+            damage = '1d12';
+            weapons[i][0] = 'Immense';
+        }
+        weapons[i][2] = weapons[i][3];
+        weapons[i][3] = weapons[i][4];
+        weapons[i][4] = actions;
+        weapons[i][5] = attackbonus;
+        weapons[i][6] = damage;
+        weapons[i][7] = range;
+    }
+}
+
+  function getPoints(character) {
+    excessskills = Number(character.athletics) + Number(character.presence) + Number(character.power_melee) + Number(character.power_ranged) + Number(character.dodge) + Number(character.agility_melee) + Number(character.agility_ranged) + Number(character.stealth) + Number(character.tolerance) + Number(character.endure) + Number(character.carry) + Number(character.grit) + Number(character.attack) + Number(character.create) + Number(character.defence) + Number(character.decipher) + Number(character.history) + Number(character.medicine) + Number(character.skills_tools) + Number(character.recover) + Number(character.deception) + Number(character.inspire) + Number(character.performance) + Number(character.persuasion) + Number(character.alertness) + Number(character.detect) + Number(character.insight) + Number(character.investigation) + Number(character.occult) + Number(character.ritual) + Number(character.spells) - 18;
+        
+    let bonusattributes = 0;
+
+    if (character.SD1[0] === 'A') {
+        bonusattributes = 3;
+    } else if (character.SD1[0] === 'B') {
+        bonusattributes = 4;
+    } else {
+        bonusattributes = 5;
+    }
+    excessattributes = Number(character.power) + Number(character.agility) + Number(character.stamina) + Number(character.intelligence) + Number(character.knowledge) + Number(character.charisma) + Number(character.perception) - 7 - bonusattributes;
+
+    excesstraditions = Number(character.charm) + Number(character.spark) + Number(character.reify) + Number(character.mind) + Number(character.shift) + Number(character.time) + Number(character.life) + Number(character.transform) + Number(character.spirit) - 15;
+
+    return Number(character.level) * 3 - excessskills / 2 - excessattributes - excesstraditions - Number(character.abilities);
+}
 
   // Read the contents of "characters.csv"
   fetch('characters.csv')
     .then(response => response.text())
     .then(data => {
         // Parse the CSV data into an array of objects
-        const characters = data.split('\n').map(line => {
+        characters = data.split('\n').map(line => {
             const [level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells] = line.split(',');
             return {level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells};
         });
 
         // Find the character object that matches the username
-        const character = characters.find(c => c.name === username);
+        character = characters.find(c => c.name === username);
 
         armors = [];
         weapons = [];
+        items = [];
 
-        character.inventory = character.inventory.replace('{', '').split('}');
+        character.inventory = character.inventory.replaceAll('{', '').split('}');
         for (let i = 0; i < character.inventory.length; i++) {
             character.inventory[i] = character.inventory[i].split(';');
-            // console.log(character.inventory[i][0])
-
             if (character.inventory[i][0] === 'weapon') {
                 weapons.push(character.inventory[i]);
             }
             else if (character.inventory[i][0] === 'armor') {
                 armors.push(character.inventory[i]);
             }
-        }
-
-        let bestarmor = 0;
-        let bestarmorindex = 0;
-
-        for (let i = 0; i < armors.length; i++) {
-            console.log(armors[i])
-
-            let armor = 0;
-            if (armors[i][1] < 5) { // None armor
-                armor = Number(armors[i][1]) + Number(armors[i][2]) + Number(armors[i][3]) + Number(character.stamina) + Number(character.agility) + Number(character.power) + Number(character.dodge) + Number(character.athletics)
-            } else if (armors[i][1] < 10) { // Light armor
-                armor = Number(armors[i][1]) + Number(armors[i][2]) + Number(armors[i][3]) + Number(character.stamina) + Number(character.agility) + Number(character.dodge)
-            } else if (armors[i][1] < 20) { // Medium armor
-                armor = Number(armors[i][1]) + Number(armors[i][2]) + Number(armors[i][3]) + Number(character.stamina) + Number(character.agility) + Number(character.power)
-            } else if (armors[i][1] < 25) { // Heavy armor
-                armor = Number(armors[i][1]) + Number(armors[i][2]) + Number(armors[i][3]) + Number(character.stamina) + Number(character.power)
-            } else { // Immense armor
-                armor = Number(armors[i][1]) + Number(armors[i][2]) + Number(armors[i][3]) + Number(character.stamina)
-            }
-            if (armor > bestarmor) {
-                bestarmorindex = i;
-                bestarmor = armor;
+            else if (character.inventory[i][0] === 'item') {
+                items.push(character.inventory[i][1]);
             }
         }
 
-        if (character.SD6 === 'A') {
-            bestarmor += 1;
-        }
+        getWeapons(weapons, character);
 
-        excessskills = Number(character.athletics) + Number(character.presence) + Number(character.power_melee) + Number(character.power_ranged) + Number(character.dodge) + Number(character.agility_melee) + Number(character.agility_ranged) + Number(character.stealth) + Number(character.tolerance) + Number(character.endure) + Number(character.carry) + Number(character.grit) + Number(character.attack) + Number(character.create) + Number(character.defence) + Number(character.decipher) + Number(character.history) + Number(character.medicine) + Number(character.skills_tools) + Number(character.recover) + Number(character.deception) + Number(character.inspire) + Number(character.performance) + Number(character.persuasion) + Number(character.alertness) + Number(character.detect) + Number(character.insight) + Number(character.investigation) + Number(character.occult) + Number(character.ritual) + Number(character.spells) - 18;
-        
-        let bonusattributes = 0;
+        character.ac = getArmor(armors, character);
 
-        if (character.SD1[0] === 'A') {
-            bonusattributes = 3;
-        } else if (character.SD1[0] === 'B') {
-            bonusattributes = 4;
-            console.log('B')
-        } else {
-            bonusattributes = 5;
-        }
-        excessattributes = Number(character.power) + Number(character.agility) + Number(character.stamina) + Number(character.intelligence) + Number(character.knowledge) + Number(character.charisma) + Number(character.perception) - 7 - bonusattributes;
-
-        excesstraditions = Number(character.charm) + Number(character.spark) + Number(character.reify) + Number(character.mind) + Number(character.shift) + Number(character.time) + Number(character.life) + Number(character.transform) + Number(character.spirit) - 15;
-
-        character.points = Number(character.level) * 3 - excessskills / 2 - excessattributes - excesstraditions - Number(character.abilities);
+        character.points = getPoints(character);
 
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {
@@ -115,7 +256,7 @@
             document.getElementById('power').textContent = character.power;
         }
         if (!! document.getElementById('athletics')) {
-            document.getElementById('athletics').textContent = character.athletics;
+            document.getElementById('athletics').textContent = character.athletics - character.armorpenalty;
         }
         if (!! document.getElementById('presence')) {
             document.getElementById('presence').textContent = character.presence;
@@ -130,7 +271,7 @@
             document.getElementById('agility').textContent = character.agility;
         }
         if (!! document.getElementById('dodge')) {
-            document.getElementById('dodge').textContent = character.dodge;
+            document.getElementById('dodge').textContent = character.dodge - character.armorpenalty;
         }
         if (!! document.getElementById('agilityMelee')) {
             document.getElementById('agilityMelee').textContent = character.agility_melee;
@@ -139,7 +280,7 @@
             document.getElementById('agilityRanged').textContent = character.agility_ranged;
         }
         if (!! document.getElementById('stealth')) {
-            document.getElementById('stealth').textContent = character.stealth;
+            document.getElementById('stealth').textContent = character.stealth - character.armorpenalty;
         }
         if (!! document.getElementById('stamina')) {
             document.getElementById('stamina').textContent = character.stamina;
@@ -292,7 +433,7 @@
             document.getElementById('deathTimer').textContent = character.death_timer;
         }
         if (!! document.getElementById('ac')) {
-            document.getElementById('ac').textContent = bestarmor;
+            document.getElementById('ac').textContent = character.ac;
         }
         if (!! document.getElementById('initiative')) {
             document.getElementById('initiative').textContent = Number(character.agility) + Number(character.time);
@@ -300,8 +441,20 @@
         if (!! document.getElementById('attacks')) {
             document.getElementById('attacks').textContent = character.attacks;
         }
-        if (!! document.getElementById('inventory')) {
-            document.getElementById('inventory').textContent = character.inventory;
+        if (!! document.getElementById('items')) {
+            document.getElementById('items').textContent = items;
+        }
+        if (!! document.getElementById('weapons')) {
+            element = document.getElementById('weapons');
+            for (let i = 0; i < weapons.length; i++) {
+                element.innerHTML += '<tr><td>' + weapons[i][1] + '</td><td>' + weapons[i][0] + '</td> <td>' + weapons[i][2] + '</td> <td>' + weapons[i][3] + '</td><td>' + weapons[i][4] + '</td><td>' + weapons[i][5] + '</td><td>' + weapons[i][6] + '</td><td>' + weapons[i][7] + '</td></tr>';
+            }
+        }
+        if (!! document.getElementById('armors')) {
+            element = document.getElementById('armors');
+            for (let i = 0; i < armors.length; i++) {
+                element.innerHTML += '<tr><td>' + armors[i][1] + '</td><td>' + armors[i][0] + '</td> <td>' + armors[i][3] + '</td> <td>' + armors[i][4] + '</td><td>' + armors[i][2] + '</td><td>' + armors[i][5] + '</td> <td>' + armors[i][6] + '</td></tr>';
+            }
         }
         if (!! document.getElementById('copper')) {
             document.getElementById('copper').textContent = character.copper;
@@ -316,3 +469,34 @@
             document.getElementById('platinum').textContent = character.platinum;
         }
     });
+
+const fs = import('fs');
+
+function updateStats() {
+    // Convert characters array to CSV
+    let csv = 'level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells\n';
+    characters.forEach(character => {
+        csv += `${character.level},${character.player},${character.deity},${character.species},${character.alignment},${character.name},${character.power},${character.agility},${character.stamina},${character.intelligence},${character.knowledge},${character.charisma},${character.perception},${character.charm},${character.spark},${character.reify},${character.mind},${character.shift},${character.time},${character.life},${character.transform},${character.spirit},${character.current_psyche},${character.current_mana},${character.recover_dots},${character.recovery_dice},${character.grievous_wounds},${character.current_hp},${character.death_timer},${character.inventory},${character.copper},${character.silver},${character.gold},${character.platinum},${character.SD1},${character.SD2},${character.SD3},${character.SD4},${character.SD5},${character.SD6},${character.abilities},${character.athletics},${character.presence},${character.power_melee},${character.power_ranged},${character.dodge},${character.agility_melee},${character.agility_ranged},${character.stealth},${character.tolerance},${character.endure},${character.carry},${character.grit},${character.attack},${character.create},${character.defence},${character.decipher},${character.history},${character.medicine},${character.skills_tools},${character.recover},${character.deception},${character.inspire},${character.performance},${character.persuasion},${character.alertness},${character.detect},${character.insight},${character.investigation},${character.occult},${character.ritual},${character.spells}\n`;
+    });
+
+    // Write CSV to characters.csv file
+    fs.writeFile('characters.csv', csv, (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+
+    // Refresh the page
+    location.reload();
+}
+
+
+    const powerButton = document.getElementById('powerbutton');
+
+    powerButton.addEventListener('click', () => {
+      if (character.points > 0) {
+        character.points--;
+        character.power++;
+        updateStats();
+      }
+    });
+    
