@@ -187,8 +187,8 @@
     .then(data => {
         // Parse the CSV data into an array of objects
         characters = data.split('\n').map(line => {
-            const [level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells] = line.split(',');
-            return {level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells};
+            const [name,level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells] = line.split(',');
+            return {name, level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells};
         });
 
         // Find the character object that matches the username
@@ -469,34 +469,3 @@
             document.getElementById('platinum').textContent = character.platinum;
         }
     });
-
-const fs = import('fs');
-
-function updateStats() {
-    // Convert characters array to CSV
-    let csv = 'level,player,deity,species,alignment,name,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells\n';
-    characters.forEach(character => {
-        csv += `${character.level},${character.player},${character.deity},${character.species},${character.alignment},${character.name},${character.power},${character.agility},${character.stamina},${character.intelligence},${character.knowledge},${character.charisma},${character.perception},${character.charm},${character.spark},${character.reify},${character.mind},${character.shift},${character.time},${character.life},${character.transform},${character.spirit},${character.current_psyche},${character.current_mana},${character.recover_dots},${character.recovery_dice},${character.grievous_wounds},${character.current_hp},${character.death_timer},${character.inventory},${character.copper},${character.silver},${character.gold},${character.platinum},${character.SD1},${character.SD2},${character.SD3},${character.SD4},${character.SD5},${character.SD6},${character.abilities},${character.athletics},${character.presence},${character.power_melee},${character.power_ranged},${character.dodge},${character.agility_melee},${character.agility_ranged},${character.stealth},${character.tolerance},${character.endure},${character.carry},${character.grit},${character.attack},${character.create},${character.defence},${character.decipher},${character.history},${character.medicine},${character.skills_tools},${character.recover},${character.deception},${character.inspire},${character.performance},${character.persuasion},${character.alertness},${character.detect},${character.insight},${character.investigation},${character.occult},${character.ritual},${character.spells}\n`;
-    });
-
-    // Write CSV to characters.csv file
-    fs.writeFile('characters.csv', csv, (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    });
-
-    // Refresh the page
-    location.reload();
-}
-
-
-    const powerButton = document.getElementById('powerbutton');
-
-    powerButton.addEventListener('click', () => {
-      if (character.points > 0) {
-        character.points--;
-        character.power++;
-        updateStats();
-      }
-    });
-    
