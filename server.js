@@ -66,6 +66,18 @@ const server = http.createServer((req, res) => {
     } else if (req.url === '/update-csv') {
         if (req.method === 'POST') {
             console.log('POST request received');
+
+            var body = '';
+            req.on('data', function (data) {
+                body += data;
+                console.log("Partial body: " + body);
+            });
+            req.on('end', function () {
+                console.log("Body: " + body);
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end('post received');
+            });
+
             // console.log(req);
             // console.log(req);
             // prints the data from the client
@@ -73,14 +85,14 @@ const server = http.createServer((req, res) => {
             // console.log(res);
 
             // parse application/x-www-form-urlencoded
-            app.use(bodyParser.urlencoded({ extended: false }))
+            // app.use(bodyParser.urlencoded({ extended: false }))
 
-            // parse application/json
-            app.use(bodyParser.raw())
+            // // parse application/json
+            // app.use(bodyParser.raw())
 
-            console.log(bodyParser.json());
+            // console.log(bodyParser.json());
 
-            console.log(req.body);
+            // console.log(req.body.character);
             
             // let body = '';
             // req.on('data', (chunk) => {

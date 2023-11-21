@@ -1,67 +1,78 @@
 <!-- FILEPATH: /home/keagan/Documents/Alem-Web-App/stats.html -->
 
 <!-- Add HTML elements to display the character's data -->
-<h1 id="name"></h1>
-<p>Points: <span id="points"></span></p>
-<ul>
-  <li>Power: <span id="power"></span> <button id="powerbutton"> + </button></li>
-    <ul>
-      <li>Presence: <span id = "presence"></span></li>
-      <li>Melee: <span id = "powerMelee"></span></li>
-      <li>Ranged: <span id = "powerRanged"></span></li>
-      <li>Athletics (Armor): <span id = "athletics"></span></li>
-    </ul>
-  <li>Agility: <span id="agility"></span></li>
-    <ul>
-      <li>Dodge (Armor): <span id = "dodge"></span></li>
-      <li>Melee: <span id = "agilityMelee"></span></li>
-      <li>Ranged: <span id = "agilityRanged"></span></li>
-      <li>Stealth (Armor): <span id = "stealth"></span></li>
-    </ul>
-  <li>Stamina: <span id="stamina"></span></li>
-    <ul>
-      <li>Tolerance: <span id = "tolerance"></span></li>
-      <li>Endure: <span id = "endure"></span></li>
-      <li>Carry: <span id = "carry"></span></li>
-      <li>Grit: <span id = "grit"></span></li>
-    </ul>
-  <li>Intelligence: <span id="intelligence"></span></li>
-    <ul>
-      <li>Attack (Mental): <span id = "attack"></span></li>
-      <li>Create: <span id = "create"></span></li>
-      <li>Defence (Mental): <span id = "defence"></span></li>
-      <li>Decipher: <span id = "decipher"></span></li>
-    </ul>
-  <li>Knowledge: <span id="knowledge"></span></li>
-    <ul>
-      <li>History: <span id = "history"></span></li>
-      <li>Medicine: <span id = "medicine"></span></li>
-      <li>Skills/Tools: <span id = "skills/tools"></span></li>
-      <li>Recover: <span id = "recover"></span></li>
-    </ul>
-  <li>Charisma: <span id="charisma"></span></li>
-    <ul>
-      <li>Deception: <span id = "deception"></span></li>
-      <li>Inspire: <span id = "inspire"></span></li>
-      <li>Performance: <span id = "performance"></span></li>
-      <li>Persuasion: <span id = "persuasion"></span></li>
-    </ul>
-  <li>Perception: <span id="perception"></span></li>
-    <ul>
-      <li>Alertness: <span id = "alertness"></span></li>
-      <li>Detect (Mental): <span id = "detect"></span></li>
-      <li>Insight: <span id = "insight"></span></li>
-      <li>Investigation: <span id = "investigation"></span></li>
-    </ul>
-  <li>Arcane: <span id="arcane"></span></li>
-    <ul>
-      <li>Occult: <span id = "occult"></span></li>
-      <li>Ritual: <span id = "ritual"></span></li>
-      <li>Spells: <span id = "spells"></span></li>
-    </ul>
-</ul>
 
-<script src="parsecsv.js"></script>
-<script src="stats.js"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport", content="width=device-width", initial-scale="1.0">
+        <title>Main Page</title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script src="parsecsv.js"></script>
+        <script src="stats.js"></script>
+    </head>
+    <body>
+      <h1 id="name"></h1>
+      <p>Points: <span id="points"></span></p>
+      <ul>
+        <li>Power: <input type="submit" value="+" onclick="increase_stat(confirm('Do you want to spend 1 point to increase Power?'), this)" id="power"/></li>
+          <ul>
+            <li>Presence: <span id = "presence"></span></li>
+            <li>Melee: <span id = "powerMelee"></span></li>
+            <li>Ranged: <span id = "powerRanged"></span></li>
+            <li>Athletics (Armor): <span id = "athletics"></span></li>
+          </ul>
+        <li>Agility: <span id="agility"></span></li>
+          <ul>
+            <li>Dodge (Armor): <span id = "dodge"></span></li>
+            <li>Melee: <span id = "agilityMelee"></span></li>
+            <li>Ranged: <span id = "agilityRanged"></span></li>
+            <li>Stealth (Armor): <span id = "stealth"></span></li>
+          </ul>
+        <li>Stamina: <span id="stamina"></span></li>
+          <ul>
+            <li>Tolerance: <span id = "tolerance"></span></li>
+            <li>Endure: <span id = "endure"></span></li>
+            <li>Carry: <span id = "carry"></span></li>
+            <li>Grit: <span id = "grit"></span></li>
+          </ul>
+        <li>Intelligence: <span id="intelligence"></span></li>
+          <ul>
+            <li>Attack (Mental): <span id = "attack"></span></li>
+            <li>Create: <span id = "create"></span></li>
+            <li>Defence (Mental): <span id = "defence"></span></li>
+            <li>Decipher: <span id = "decipher"></span></li>
+          </ul>
+        <li>Knowledge: <span id="knowledge"></span></li>
+          <ul>
+            <li>History: <span id = "history"></span></li>
+            <li>Medicine: <span id = "medicine"></span></li>
+            <li>Skills/Tools: <span id = "skills/tools"></span></li>
+            <li>Recover: <span id = "recover"></span></li>
+          </ul>
+        <li>Charisma: <span id="charisma"></span></li>
+          <ul>
+            <li>Deception: <span id = "deception"></span></li>
+            <li>Inspire: <span id = "inspire"></span></li>
+            <li>Performance: <span id = "performance"></span></li>
+            <li>Persuasion: <span id = "persuasion"></span></li>
+          </ul>
+        <li>Perception: <span id="perception"></span></li>
+          <ul>
+            <li>Alertness: <span id = "alertness"></span></li>
+            <li>Detect (Mental): <span id = "detect"></span></li>
+            <li>Insight: <span id = "insight"></span></li>
+            <li>Investigation: <span id = "investigation"></span></li>
+          </ul>
+        <li>Arcane: <span id="arcane"></span></li>
+          <ul>
+            <li>Occult: <span id = "occult"></span></li>
+            <li>Ritual: <span id = "ritual"></span></li>
+            <li>Spells: <span id = "spells"></span></li>
+          </ul>
+      </ul>
+    </body>
+</html>
+
 
 

@@ -1,67 +1,76 @@
 <!-- FILEPATH: /home/keagan/Documents/Alem-Web-App/stats.html -->
 
 <!-- Add HTML elements to display the character's data -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" name="viewport", content="width=device-width", initial-scale="1.0">
+        <title>Main Page</title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    </head>
+    <body>
+      <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
 
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-  </style>
+      <h1 id="name"></h1>
+      <p>Points: <span id="points"></span></p>
+      <ul>
+        <li>Recovery Dots: <span id="recoveryDots"></span></li>
+        <li>Recovery Dice: <span id="recoveryDice"></span></li>
+        <li>Copper: <span id="copper"></span></li>
+        <li>Silver: <span id="silver"></span></li>
+        <li>Gold: <span id="gold"></span></li>
+        <li>Platinum: <span id="platinum"></span></li>
+      </ul>
 
-<h1 id="name"></h1>
-<p>Points: <span id="points"></span></p>
-<ul>
-  <li>Recovery Dots: <span id="recoveryDots"></span></li>
-  <li>Recovery Dice: <span id="recoveryDice"></span></li>
-  <li>Copper: <span id="copper"></span></li>
-  <li>Silver: <span id="silver"></span></li>
-  <li>Gold: <span id="gold"></span></li>
-  <li>Platinum: <span id="platinum"></span></li>
-</ul>
+      <button>Short Rest</button>
+      <button>Long Rest</button>
+      <button>Good Nights Rest</button>
 
-<button>Short Rest</button>
-<button>Long Rest</button>
-<button>Good Nights Rest</button>
+      <h2>Inventory</h2>
+      <h3>Weapons</h3>
+      <table id="weapons">
+        <tr>
+          <th>Weapon Name</th>
+          <th>Weapon Type</th>
+          <th>Item Value</th>
+          <th>Charm Value</th>
+          <th>Actions</th>
+          <th>Attack Bonus</th>
+          <th>Damage</th>
+          <th>Range</th>
+        </tr>
+      </table>
+      <h3>Armors</h3>
+      <table id="armors">
+        <tr>
+          <th>Armor Name</th>
+          <th>Armor Type</th>
+          <th>Item Value</th>
+          <th>Charm Value</th>
+          <th>Physical Bonus</th>
+          <th>Armor Penalty</th>
+          <th>Wearable</th>
+        </tr>
+      </table>
+      <h3>Items</h3>
+      <p><span id="items"></span></p>
 
-<h2>Inventory</h2>
-<h3>Weapons</h3>
-<table id="weapons">
-  <tr>
-    <th>Weapon Name</th>
-    <th>Weapon Type</th>
-    <th>Item Value</th>
-    <th>Charm Value</th>
-    <th>Actions</th>
-    <th>Attack Bonus</th>
-    <th>Damage</th>
-    <th>Range</th>
-  </tr>
-</table>
-<h3>Armors</h3>
-<table id="armors">
-  <tr>
-    <th>Armor Name</th>
-    <th>Armor Type</th>
-    <th>Item Value</th>
-    <th>Charm Value</th>
-    <th>Physical Bonus</th>
-    <th>Armor Penalty</th>
-    <th>Wearable</th>
-  </tr>
-</table>
-<h3>Items</h3>
-<p><span id="items"></span></p>
-
-<script src="parsecsv.js"></script>
+      <script src="parsecsv.js"></script>
+    </body>
+</html>

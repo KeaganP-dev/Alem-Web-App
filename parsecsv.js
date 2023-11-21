@@ -18,8 +18,6 @@
     let bestarmorindex = 0;
 
     for (let i = 0; i < armors.length; i++) {
-        console.log(armors[i]);
-
         let armor = 0;
         if (armors[i][2] == 0) { // Minimal armor
             pb = Number(character.stamina) + Number(character.agility) + Number(character.power) + Number(character.dodge) + Number(character.athletics);
@@ -113,7 +111,6 @@
     //Medium         ,atropos   ,0           ,0             ,1          ,7              ,1d8    ,1
 
     for (let i = 0; i < weapons.length; i++) {
-        console.log(weapons[i]);
         let actions = 0;
         let attackbonus = 0;
         let damage = 0;
@@ -129,14 +126,12 @@
         } else {
             attackbonus = meleeattackbonus + " / " + rangedattackbonus;
         }
-        console.log(weapons[i][2])
 
         if (weapons[i][2] == 4) { // Minimal weapon
             actions = 0.5;
             damage = '1d4';
             weapons[i][0] = 'Minimal';
         } else if (weapons[i][2] == 6) { // Light weapon
-            console.log('light');
             actions = 1;
             damage = '1d6';
             weapons[i][0] = 'Light';
