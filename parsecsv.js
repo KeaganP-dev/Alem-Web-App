@@ -402,13 +402,13 @@ function getArcane(character) {
             document.getElementById('maxPsyche').textContent = (10 + Number(character.intelligence) + Number(character.mind) + (character.SD6 === 'E' ? 1 : 0));
         }
         if (!! document.getElementById('currentPsyche')) {
-            document.getElementById('currentPsyche').textContent = character.current_psyche;
+            document.getElementById('currentPsyche').value = character.current_psyche;
         }
         if (!! document.getElementById('maxMana')) {
             document.getElementById('maxMana').textContent = 100 + character.level * 10;
         }
         if (!! document.getElementById('currentMana')) {
-            document.getElementById('currentMana').textContent = character.current_mana;
+            document.getElementById('currentMana').value = character.current_mana;
         }
         if (!! document.getElementById('recoveryDots')) {
             document.getElementById('recoveryDots').textContent = character.recovery_dots;

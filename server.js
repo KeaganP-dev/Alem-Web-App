@@ -99,6 +99,50 @@ const server = http.createServer((req, res) => {
             });
            
         }
+    } else if (req.url === '/update-csv-text') {
+        if (req.method === 'POST') {
+            console.log('POST request received');
+
+            var body = '';
+            req.on('data', function (data) {
+                body += data;
+                console.log("Partial body: " + body);
+                body = JSON.parse(body);
+                console.log("character" + body.character);
+                console.log("attribute" + body.attribute);
+                console.log("value" + body.value)
+
+                // Read characters from the characters.csv file
+                readCharacters((characters) => {
+                    for (let i = 0; i < characters.length; i++) {
+                        if (characters[i].name == body.character) {
+                            characters[i][body.attribute.toLowerCase()] = function () {
+                                if (body.value[0] == '+') {
+                                    return parseInt(characters[i][body.attribute.toLowerCase()]) + parseInt(body.reward);
+                                } else if (body.value[0] == '-') {
+                                    return parseInt(characters[i][body.attribute.toLowerCase()]) - parseInt(body.reward);
+                                } else {
+                                    parseInt(body.reward);
+                                }
+                            }
+                            console.log(characters[i][body.attribute.toLowerCase()])
+                        }
+                    }
+                    // console.log(Object.keys(characters[0]).join(','));
+                    writeCharacters(characters, (err) => {
+                        if (err) {
+                            res.statusCode = 500;
+                            res.end('Internal Server Error');
+                        } else {
+                            res.statusCode = 200;
+                            res.end('Character added successfully');
+                        }
+                    });
+                });
+
+            });
+           
+        }
     } else {
         var filePath = path.join(__dirname, 'sign-in.html');
 
