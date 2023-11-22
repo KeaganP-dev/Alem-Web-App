@@ -116,15 +116,10 @@ const server = http.createServer((req, res) => {
                 readCharacters((characters) => {
                     for (let i = 0; i < characters.length; i++) {
                         if (characters[i].name == body.character) {
-                            characters[i][body.attribute.toLowerCase()] = function () {
-                                if (body.value[0] == '+') {
-                                    return parseInt(characters[i][body.attribute.toLowerCase()]) + parseInt(body.reward);
-                                } else if (body.value[0] == '-') {
-                                    return parseInt(characters[i][body.attribute.toLowerCase()]) - parseInt(body.reward);
-                                } else {
-                                    parseInt(body.reward);
-                                }
+                            attribute = function () {
+
                             }
+                            characters[i][body.attribute.toLowerCase()] = body.value;
                             console.log(characters[i][body.attribute.toLowerCase()])
                         }
                     }

@@ -220,6 +220,10 @@ function getArcane(character) {
 
         getArcane(character);
 
+        character.max_mana = 100 + character.level * 10;
+
+        character.max_psyche = (10 + Number(character.intelligence) + Number(character.mind) + (character.SD6 === 'E' ? 1 : 0));
+
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {
             document.getElementById('level').textContent = character.level;
@@ -399,16 +403,16 @@ function getArcane(character) {
             document.getElementById('spirit').textContent = character.spirit;
         }
         if (!! document.getElementById('maxPsyche')) {
-            document.getElementById('maxPsyche').textContent = (10 + Number(character.intelligence) + Number(character.mind) + (character.SD6 === 'E' ? 1 : 0));
+            document.getElementById('maxPsyche').textContent = character.max_psyche;
         }
-        if (!! document.getElementById('currentPsyche')) {
-            document.getElementById('currentPsyche').value = character.current_psyche;
+        if (!! document.getElementById('Current_Psyche')) {
+            document.getElementById('Current_Psyche').value = character.current_psyche;
         }
         if (!! document.getElementById('maxMana')) {
-            document.getElementById('maxMana').textContent = 100 + character.level * 10;
+            document.getElementById('maxMana').textContent = character.max_mana;
         }
-        if (!! document.getElementById('currentMana')) {
-            document.getElementById('currentMana').value = character.current_mana;
+        if (!! document.getElementById('Current_Mana')) {
+            document.getElementById('Current_Mana').value = character.current_mana;
         }
         if (!! document.getElementById('recoveryDots')) {
             document.getElementById('recoveryDots').textContent = character.recovery_dots;
