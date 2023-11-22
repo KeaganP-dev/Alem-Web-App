@@ -176,6 +176,11 @@
     return Number(character.level) * 3 - excessskills / 2 - excessattributes - excesstraditions - Number(character.abilities);
 }
 
+function getArcane(character) {
+    totalTraditions = Number(character.charm) + Number(character.spark) + Number(character.reify) + Number(character.mind) + Number(character.shift) + Number(character.time) + Number(character.life) + Number(character.transform) + Number(character.spirit);
+    character.arcane = Math.round(totalTraditions / 5 - 0.01);
+}
+
   // Read the contents of "characters.csv"
   fetch('characters.csv')
     .then(response => response.text())
@@ -212,6 +217,8 @@
         character.ac = getArmor(armors, character);
 
         character.points = getPoints(character);
+
+        getArcane(character);
 
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {

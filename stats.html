@@ -8,69 +8,69 @@
         <meta charset="UTF-8" name="viewport", content="width=device-width", initial-scale="1.0">
         <title>Main Page</title>
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-        <script src="parsecsv.js"></script>
-        <script src="stats.js"></script>
     </head>
     <body>
       <h1 id="name"></h1>
       <p>Points: <span id="points"></span></p>
       <ul>
-        <li>Power: <input type="submit" value="+" onclick="increase_stat(confirm('Do you want to spend 1 point to increase Power?'), this)" id="power"/></li>
+        <li>Power: <span id = "power"></span><input type="submit" value="+" class="input" id="Power"/></li>
           <ul>
-            <li>Presence: <span id = "presence"></span></li>
-            <li>Melee: <span id = "powerMelee"></span></li>
-            <li>Ranged: <span id = "powerRanged"></span></li>
-            <li>Athletics (Armor): <span id = "athletics"></span></li>
+            <li>Presence: <span id = "presence"></span><input type="submit" value="+" class="input" id="Presence"/></li>
+            <li>Melee: <span id = "powerMelee"></span><input type="submit" value="+" class="input" id="Power_Melee"/></li>
+            <li>Ranged: <span id = "powerRanged"></span><input type="submit" value="+" class="input" id="Power_Ranged"/></li>
+            <li>Athletics (Armor): <span id = "athletics"></span><input type="submit" value="+" class="input" id="Athletics"/></li>
           </ul>
-        <li>Agility: <span id="agility"></span></li>
+        <li>Agility: <span id="agility"></span><input type="submit" value="+" class="input" id="Agility"/></li>
           <ul>
-            <li>Dodge (Armor): <span id = "dodge"></span></li>
-            <li>Melee: <span id = "agilityMelee"></span></li>
-            <li>Ranged: <span id = "agilityRanged"></span></li>
-            <li>Stealth (Armor): <span id = "stealth"></span></li>
+            <li>Dodge (Armor): <span id = "dodge"></span><input type="submit" value="+" class="input" id="Dodge"/></li>
+            <li>Melee: <span id = "agilityMelee"></span><input type="submit" value="+" class="input" id="Agility_Melee"/></li>
+            <li>Ranged: <span id = "agilityRanged"></span><input type="submit" value="+" class="input" id="Agility_Ranged"/></li>
+            <li>Stealth (Armor): <span id = "stealth"></span><input type="submit" value="+" class="input" id="Stealth"/></li>
           </ul>
-        <li>Stamina: <span id="stamina"></span></li>
+        <li>Stamina: <span id="stamina"></span><input type="submit" value="+" class="input" id="Stamina"/></li>
           <ul>
-            <li>Tolerance: <span id = "tolerance"></span></li>
-            <li>Endure: <span id = "endure"></span></li>
-            <li>Carry: <span id = "carry"></span></li>
-            <li>Grit: <span id = "grit"></span></li>
+            <li>Tolerance: <span id = "tolerance"></span><input type="submit" value="+" class="input" id="Tolerance"/></li>
+            <li>Endure: <span id = "endure"></span><input type="submit" value="+" class="input" id="Endure"/></li>
+            <li>Carry: <span id = "carry"></span><input type="submit" value="+" class="input" id="Carry"/></li>
+            <li>Grit: <span id = "grit"></span><input type="submit" value="+" class="input" id="Grit"/></li>
           </ul>
-        <li>Intelligence: <span id="intelligence"></span></li>
+        <li>Intelligence: <span id="intelligence"></span><input type="submit" value="+" class="input" id="Intelligence"/></li>
           <ul>
-            <li>Attack (Mental): <span id = "attack"></span></li>
-            <li>Create: <span id = "create"></span></li>
-            <li>Defence (Mental): <span id = "defence"></span></li>
-            <li>Decipher: <span id = "decipher"></span></li>
+            <li>Attack (Mental): <span id = "attack"></span><input type="submit" value="+" class="input" id="Attack"/></li>
+            <li>Create: <span id = "create"></span><input type="submit" value="+" class="input" id="Create"/></li>
+            <li>Defence (Mental): <span id = "defence"></span><input type="submit" value="+" class="input" id="Defence"/></li>
+            <li>Decipher: <span id = "decipher"></span><input type="submit" value="+" class="input" id="Decipher"/></li>
           </ul>
-        <li>Knowledge: <span id="knowledge"></span></li>
+        <li>Knowledge: <span id="knowledge"></span><input type="submit" value="+" class="input" id="Knowledge"/></li>
           <ul>
-            <li>History: <span id = "history"></span></li>
-            <li>Medicine: <span id = "medicine"></span></li>
-            <li>Skills/Tools: <span id = "skills/tools"></span></li>
-            <li>Recover: <span id = "recover"></span></li>
+            <li>History: <span id = "history"></span><input type="submit" value="+" class="input" id="History"/></li>
+            <li>Medicine: <span id = "medicine"></span><input type="submit" value="+" class="input" id="Medicine"/></li>
+            <li>Skills/Tools: <span id = "skills/tools"><input type="submit" value="+" class="input" id="Skills_Tools"/></span></li>
+            <li>Recover: <span id = "recover"></span><input type="submit" value="+" class="input" id="Recover"/></li>
           </ul>
-        <li>Charisma: <span id="charisma"></span></li>
+        <li>Charisma: <span id="charisma"></span><input type="submit" value="+" class="input" id="Charisma"/></li>
           <ul>
-            <li>Deception: <span id = "deception"></span></li>
-            <li>Inspire: <span id = "inspire"></span></li>
-            <li>Performance: <span id = "performance"></span></li>
-            <li>Persuasion: <span id = "persuasion"></span></li>
+            <li>Deception: <span id = "deception"></span><input type="submit" value="+" class="input" id="Deception"/></li>
+            <li>Inspire: <span id = "inspire"></span><input type="submit" value="+" class="input" id="Inspire"/></li>
+            <li>Performance: <span id = "performance"></span><input type="submit" value="+" class="input" id="Performance"/></li>
+            <li>Persuasion: <span id = "persuasion"></span><input type="submit" value="+" class="input" id="Persuasion"/></li>
           </ul>
-        <li>Perception: <span id="perception"></span></li>
+        <li>Perception: <span id="perception"></span><input type="submit" value="+" class="input" id="Perception"/></li>
           <ul>
-            <li>Alertness: <span id = "alertness"></span></li>
-            <li>Detect (Mental): <span id = "detect"></span></li>
-            <li>Insight: <span id = "insight"></span></li>
-            <li>Investigation: <span id = "investigation"></span></li>
+            <li>Alertness: <span id = "alertness"></span><input type="submit" value="+" class="input" id="Alertness"/></li>
+            <li>Detect (Mental): <span id = "detect"></span><input type="submit" value="+" class="input" id="Detect"/></li>
+            <li>Insight: <span id = "insight"></span><input type="submit" value="+" class="input" id="Insight"/></li>
+            <li>Investigation: <span id = "investigation"></span><input type="submit" value="+" class="input" id="Investigation"/></li>
           </ul>
         <li>Arcane: <span id="arcane"></span></li>
           <ul>
-            <li>Occult: <span id = "occult"></span></li>
-            <li>Ritual: <span id = "ritual"></span></li>
-            <li>Spells: <span id = "spells"></span></li>
+            <li>Occult: <span id = "occult"></span><input type="submit" value="+" class="input" id="Occult"/></li>
+            <li>Ritual: <span id = "ritual"></span><input type="submit" value="+" class="input" id="Ritual"/></li>
+            <li>Spells: <span id = "spells"></span><input type="submit" value="+" class="input" id="Spells"/></li>
           </ul>
       </ul>
+      <script src="parsecsv.js"></script>
+      <script src="stats.js"></script>
     </body>
 </html>
 

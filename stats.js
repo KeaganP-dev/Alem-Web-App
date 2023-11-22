@@ -3,7 +3,7 @@
 var xhr = new XMLHttpRequest();
 
 // Set the request URL and method
-var url = "http://localhost:3000/update-csv"; // Updated endpoint
+var url = window.location.href.replace('stats.html', 'update-csv'); // Updated endpoint
 var method = "POST";
 
 // Open the request
@@ -13,15 +13,22 @@ xhr.open(method, url, true);
 xhr.setRequestHeader("Content-Type", "application/json");
 
 function increase_stat(confirmed, element) {
-    console.log(character.name);
-    console.log(confirmed);
-    console.log(element);
+    let rewardsingle = ["Power", "Agility", "Stamina", "Intelligence", "Knowledge", "History", "Perception"]
+    let reward = 0;
+    if (rewardsingle.includes(element)) {
+        reward = 1;
+    } else {
+        reward = 2;
+    };
 
-    if(confirmed) {
+    if(confirmed && character.points > 0) {
         var data = {
             'character' : character.name,
-            'attribute' : element.id,
+            'attribute' : element,
+            'reward' : reward
         };
+
+        console.log("Data" + JSON.stringify(data));
         var jsonData = JSON.stringify(data);
     
         // Send the request
@@ -31,6 +38,7 @@ function increase_stat(confirmed, element) {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 // Request was successful
+                location.reload();
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);
             } else {
@@ -47,12 +55,11 @@ function increase_stat(confirmed, element) {
 }
 
 
-const table = document.getElementsByTagName('input');
+const listofinputs = document.getElementsByClassName('input');
 
-for (let i = 0; i < table.length; i++) {
-    table[i].addEventListener('click', function() {
-        console.log('clicked')
-        table[i].clicked = true;
-        increase_stat(table[i].name)
-    });
+console.log(listofinputs);
+
+for (let i = 0; i < listofinputs.length; i++) {
+    console.log(listofinputs[i].id);
+    listofinputs[i].addEventListener("click", function() { increase_stat(confirm('Do you want to spend 1 point to increase this?'), listofinputs[i].id) });
 }

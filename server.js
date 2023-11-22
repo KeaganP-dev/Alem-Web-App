@@ -22,7 +22,7 @@ function readCharacters(callback) {
 
 // Function to write data to the characters.csv file
 function writeCharacters(data, callback) {
-    const csvData = data.map((character) => Object.values(character).join(',')).join('\n');
+    const csvData = Object.keys(data[0]).join(',') + '\n' + data.map((character) => Object.values(character).join(',')).join('\n');
     fs.writeFile('characters.csv', csvData, (err) => {
         if (err) {
             callback(err);
@@ -71,57 +71,33 @@ const server = http.createServer((req, res) => {
             req.on('data', function (data) {
                 body += data;
                 console.log("Partial body: " + body);
+                body = JSON.parse(body);
+                console.log("character" + body.character);
+                console.log("attribute" + body.attribute);
+                console.log("reward" + body.reward)
+
+                // Read characters from the characters.csv file
+                readCharacters((characters) => {
+                    for (let i = 0; i < characters.length; i++) {
+                        if (characters[i].name == body.character) {
+                            characters[i][body.attribute.toLowerCase()] = parseInt(characters[i][body.attribute.toLowerCase()]) + parseInt(body.reward);
+                            console.log(characters[i][body.attribute.toLowerCase()])
+                        }
+                    }
+                    // console.log(Object.keys(characters[0]).join(','));
+                    writeCharacters(characters, (err) => {
+                        if (err) {
+                            res.statusCode = 500;
+                            res.end('Internal Server Error');
+                        } else {
+                            res.statusCode = 200;
+                            res.end('Character added successfully');
+                        }
+                    });
+                });
+
             });
-            req.on('end', function () {
-                console.log("Body: " + body);
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end('post received');
-            });
-
-            // console.log(req);
-            // console.log(req);
-            // prints the data from the client
-            // console.log("\n\n\n\n\nRES:" );
-            // console.log(res);
-
-            // parse application/x-www-form-urlencoded
-            // app.use(bodyParser.urlencoded({ extended: false }))
-
-            // // parse application/json
-            // app.use(bodyParser.raw())
-
-            // console.log(bodyParser.json());
-
-            // console.log(req.body.character);
-            
-            // let body = '';
-            // req.on('data', (chunk) => {
-            //     body += chunk;
-            // });
-            // req.on('end', () => {
-            //     // Read characters from the characters.csv file
-            //     readCharacters((characters) => {
-            //         if (characters.length > 0) {
-            //             const firstRow = characters[0];
-            //             const firstNumber = parseInt(firstRow['Number']);
-            //             firstRow['Number'] = (firstNumber + 1).toString();
-
-            //             // Write updated characters to the characters.csv file
-            //             writeCharacters(characters, (err) => {
-            //                 if (err) {
-            //                     res.statusCode = 500;
-            //                     res.end('Internal Server Error');
-            //                 } else {
-            //                     res.statusCode = 200;
-            //                     res.end('CSV updated successfully');
-            //                 }
-            //             });
-            //         } else {
-            //             res.statusCode = 404;
-            //             res.end('No characters found');
-            //         }
-            //     });
-            // });
+           
         }
     } else {
         var filePath = path.join(__dirname, 'sign-in.html');
