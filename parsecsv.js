@@ -224,6 +224,8 @@ function getArcane(character) {
 
         character.max_psyche = (10 + Number(character.intelligence) + Number(character.mind) + (character.SD6 === 'E' ? 1 : 0));
 
+        character.maxRecoveryDice = Number(character.stamina) + Number(character.recover)
+
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {
             document.getElementById('level').textContent = character.level;
@@ -414,14 +416,14 @@ function getArcane(character) {
         if (!! document.getElementById('Current_Mana')) {
             document.getElementById('Current_Mana').value = character.current_mana;
         }
-        if (!! document.getElementById('recoveryDots')) {
-            document.getElementById('recoveryDots').textContent = character.recovery_dots;
+        if (!! document.getElementById('Recovery_Dots')) {
+            document.getElementById('Recovery_Dots').value = character.recovery_dots;
         }
         if (!! document.getElementById('maxRecoveryDice')) {
             document.getElementById('maxRecoveryDice').textContent = character.maxRecoveryDice;
         }
-        if (!! document.getElementById('recoveryDice')) {
-            document.getElementById('recoveryDice').textContent = character.recovery_dice;
+        if (!! document.getElementById('Recovery_Dice')) {
+            document.getElementById('Recovery_Dice').value = character.recovery_dice;
         }
         if (!! document.getElementById('maxHP')) {
             document.getElementById('maxHP').textContent = Math.max((Number(character.stamina) + Number(character.life)) * Number(character.level), character.level * 7);
@@ -435,8 +437,8 @@ function getArcane(character) {
         if (!! document.getElementById('Current_HP')) {
             document.getElementById('Current_HP').textContent = Number(character.current_hp);
         }
-        if (!! document.getElementById('death_Timer')) {
-            document.getElementById('death_Timer').textContent = character.death_timer;
+        if (!! document.getElementById('Death_Timer')) {
+            document.getElementById('Death_Timer').value = character.death_timer;
         }
         if (!! document.getElementById('ac')) {
             document.getElementById('ac').textContent = character.ac;

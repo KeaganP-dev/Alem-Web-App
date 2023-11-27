@@ -15,6 +15,7 @@
         <li>Crawl: <span id="crawl"></span></li>
         <li>Run: <span id="run"></span></li>
         <li>Sprint: <span id="sprint"></span></li>
+        <br>
         <li>Max HP: <span id="maxHP"></span></li>
         <li>Current HP: <span id="Current_HP"></span>
         <li>Grievous Wounds: <span id="grievous_Wounds"></span></li>
@@ -24,12 +25,30 @@
           <button id="damage" class="inputbutton">Take Damage</button>
           <button id="temp_hp" class="inputbutton">Add Temp HP</button>
         </li>
-        <li>Attacks: <span id="attacks"></span></li>
-        <li>AC: <span id="ac"></span></li>
-        <li>Death Timer: <span id="death_Timer"></span></li>
+        <br>
+        <form>
+          <li>
+            Death Timer: <input id="Death_Timer"></input>
+            <input type="submit" value="" class="inputfield" id="DTimer">
+          </li>
+        </form>
+        <form>
+          <li>
+            Recovery Dots: <input id="Recovery_Dots"></input>
+            <input type="submit" value="" class="inputfield" id="RDots">
+          </li>
+        </form>
+        <form>
+          <li>
+            Recovery Dice: <input id="Recovery_Dice"></input>
+            <input type="submit" value="" class="inputfield" id="RDice">
+          </li>
+        </form>
+        <li>Max Recovery Dice: <span id="maxRecoveryDice"></span></li>
+        <br>
         <li>Initiative: <span id="initiative"></span></li>
-        <li>Recovery Dots: <span id="recoveryDots"></span></li>
-        <li>Recovery Dice: <span id="recoveryDice"></span></li>
+        <li>AC: <span id="ac"></span></li>
+        <li>Attacks: <span id="attacks"></span></li>
       </ul>
 
       <script src="parsecsv.js"></script>
