@@ -178,7 +178,7 @@
 
 function getArcane(character) {
     totalTraditions = Number(character.charm) + Number(character.spark) + Number(character.reify) + Number(character.mind) + Number(character.shift) + Number(character.time) + Number(character.life) + Number(character.transform) + Number(character.spirit);
-    character.arcane = Math.round(totalTraditions / 5 - 0.01);
+    return totalTraditions;
 }
 
   // Read the contents of "characters.csv"
@@ -187,8 +187,8 @@ function getArcane(character) {
     .then(data => {
         // Parse the CSV data into an array of objects
         characters = data.split('\n').map(line => {
-            const [name,level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells] = line.split(',');
-            return {name, level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recover_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells};
+            const [name,level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recovery_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells] = line.split(',');
+            return {name, level,player,deity,species,alignment,power,agility,stamina,intelligence,knowledge,charisma,perception,charm,spark,reify,mind,shift,time,life,transform,spirit,current_psyche,current_mana,recovery_dots,recovery_dice,grievous_wounds,current_hp,death_timer,inventory,copper,silver,gold,platinum,SD1,SD2,SD3,SD4,SD5,SD6,abilities,athletics,presence,power_melee,power_ranged,dodge,agility_melee,agility_ranged,stealth,tolerance,endure,carry,grit,attack,create,defence,decipher,history,medicine,skills_tools,recover,deception,inspire,performance,persuasion,alertness,detect,insight,investigation,occult,ritual,spells};
         });
 
         // Find the character object that matches the username
@@ -218,7 +218,7 @@ function getArcane(character) {
 
         character.points = getPoints(character);
 
-        getArcane(character);
+        character.arcane = getArcane(character);
 
         character.max_mana = 100 + character.level * 10;
 
@@ -256,7 +256,7 @@ function getArcane(character) {
             document.getElementById('run').textContent = (Number(character.agility) + Number(character.shift)) > 3 ? Math.round((Number(character.agility) + Number(character.shift))) : 3;
         }
         if (!! document.getElementById('sprint')) {
-            document.getElementById('sprint').textContent = (Number(character.agility) + Number(character.shift)) > 6 ? Math.round((Number(character.agility) + Number(character.shift)) * 2) : 3;
+            document.getElementById('sprint').textContent = (Number(character.agility) + Number(character.shift)) > 6 ? Math.round((Number(character.agility) + Number(character.shift)) * 2) : 6;
         }
         if (!! document.getElementById('power')) {
             document.getElementById('power').textContent = character.power;
@@ -424,19 +424,19 @@ function getArcane(character) {
             document.getElementById('recoveryDice').textContent = character.recovery_dice;
         }
         if (!! document.getElementById('maxHP')) {
-            document.getElementById('maxHP').textContent = (Number(character.stamina) + Number(character.life)) * Number(character.level);
+            document.getElementById('maxHP').textContent = Math.max((Number(character.stamina) + Number(character.life)) * Number(character.level), character.level * 7);
         }
-        if (!! document.getElementById('grievousWounds')) {
-            document.getElementById('grievousWounds').textContent = character.grievous_wounds;
+        if (!! document.getElementById('grievous_Wounds')) {
+            document.getElementById('grievous_Wounds').textContent = character.grievous_wounds;
         }
-        if (!! document.getElementById('modifiedMaxHP')) {
-            document.getElementById('modifiedMaxHP').textContent = Math.round((Number(character.stamina) + Number(character.life)) * Number(character.level) / Math.pow(2, character.grievous_wounds) - 0.01);
+        if (!! document.getElementById('modified_Max_HP')) {
+            document.getElementById('modified_Max_HP').textContent = Math.round((Number(character.stamina) + Number(character.life)) * Number(character.level) / Math.pow(2, character.grievous_wounds) - 0.01);
         }
-        if (!! document.getElementById('currentHP')) {
-            document.getElementById('currentHP').textContent = character.current_hp;
+        if (!! document.getElementById('Current_HP')) {
+            document.getElementById('Current_HP').textContent = Number(character.current_hp);
         }
-        if (!! document.getElementById('deathTimer')) {
-            document.getElementById('deathTimer').textContent = character.death_timer;
+        if (!! document.getElementById('death_Timer')) {
+            document.getElementById('death_Timer').textContent = character.death_timer;
         }
         if (!! document.getElementById('ac')) {
             document.getElementById('ac').textContent = character.ac;
