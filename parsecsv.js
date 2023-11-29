@@ -226,6 +226,8 @@ function getArcane(character) {
 
         character.maxRecoveryDice = Number(character.stamina) + Number(character.recover)
 
+        character.modified_max_hp = Math.round((Number(character.stamina) + Number(character.life)) * Number(character.level) / Math.pow(2, character.grievous_wounds) - 0.01);
+
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {
             document.getElementById('level').textContent = character.level;
@@ -432,10 +434,10 @@ function getArcane(character) {
             document.getElementById('grievous_Wounds').textContent = character.grievous_wounds;
         }
         if (!! document.getElementById('modified_Max_HP')) {
-            document.getElementById('modified_Max_HP').textContent = Math.round((Number(character.stamina) + Number(character.life)) * Number(character.level) / Math.pow(2, character.grievous_wounds) - 0.01);
+            document.getElementById('modified_Max_HP').textContent = character.modified_max_hp;
         }
         if (!! document.getElementById('Current_HP')) {
-            document.getElementById('Current_HP').textContent = Number(character.current_hp);
+            document.getElementById('Current_HP').textContent = character.current_hp;
         }
         if (!! document.getElementById('Death_Timer')) {
             document.getElementById('Death_Timer').value = character.death_timer;
@@ -465,15 +467,15 @@ function getArcane(character) {
             }
         }
         if (!! document.getElementById('copper')) {
-            document.getElementById('copper').textContent = character.copper;
+            document.getElementById('copper').value = character.copper;
         }
         if (!! document.getElementById('silver')) {
-            document.getElementById('silver').textContent = character.silver;
+            document.getElementById('silver').value = character.silver;
         }
         if (!! document.getElementById('gold')) {
-            document.getElementById('gold').textContent = character.gold;
+            document.getElementById('gold').value = character.gold;
         }
         if (!! document.getElementById('platinum')) {
-            document.getElementById('platinum').textContent = character.platinum;
+            document.getElementById('platinum').value = character.platinum;
         }
     });
