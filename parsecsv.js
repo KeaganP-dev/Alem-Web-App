@@ -220,13 +220,15 @@ function getArcane(character) {
 
         character.arcane = getArcane(character);
 
-        character.max_mana = 100 + character.level * 10;
+        character.max_mana = 100;
 
         character.max_psyche = (10 + Number(character.intelligence) + Number(character.mind) + (character.SD6 === 'E' ? 1 : 0));
 
         character.maxRecoveryDice = Number(character.stamina) + Number(character.recover)
 
         character.modified_max_hp = Math.round((Number(character.stamina) + Number(character.life)) * Number(character.level) / Math.pow(2, character.grievous_wounds) - 0.01);
+
+        character.max_hp = Math.max((Number(character.stamina) + Number(character.life)) * Number(character.level), character.level * 7);
 
         // Populate the HTML elements with the character's data
         if (!! document.getElementById('level')) {
@@ -428,7 +430,7 @@ function getArcane(character) {
             document.getElementById('Recovery_Dice').value = character.recovery_dice;
         }
         if (!! document.getElementById('maxHP')) {
-            document.getElementById('maxHP').textContent = Math.max((Number(character.stamina) + Number(character.life)) * Number(character.level), character.level * 7);
+            document.getElementById('maxHP').textContent = character.max_hp;
         }
         if (!! document.getElementById('grievous_Wounds')) {
             document.getElementById('grievous_Wounds').textContent = character.grievous_wounds;

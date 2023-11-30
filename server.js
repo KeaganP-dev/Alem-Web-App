@@ -157,7 +157,64 @@ const server = http.createServer((req, res) => {
             });
            
         }
-    } else {
+    } else if (req.url === '/item-handler') {
+        if (req.method === 'POST') {
+            console.log('POST request received');
+
+
+            var body = '';
+            req.on('data', function (data) {
+                body += data;
+                body = JSON.parse(body);
+                console.log("character: " + body.character);
+                console.log("attribute: " + body.attribute);
+                console.log("value: " + body.value)
+
+                islist = false;
+
+                if (String(body.attribute).includes(',')) {
+                    body.attribute = String(body.attribute).replace(' ', '').split(',');
+                    islist = true;
+                }
+
+                if (String(body.value).includes(',')) {
+                    body.value = String(body.value).replace(' ', '').split(',');
+                }
+
+                // Read characters from the characters.csv file
+                readCharacters((characters) => {
+                    for (let i = 0; i < characters.length; i++) {
+                        if (characters[i].name == body.character) {
+                            attribute = function () {
+
+                            }
+
+                            if (islist) {
+                                for (let j = 0; j < body.attribute.length; j++) {
+                                    characters[i][body.attribute[j].toLowerCase()] = parseInt(body.value[j]);
+                                    console.log(characters[i][body.attribute[j].toLowerCase()])
+                                }
+                            } else {
+                                characters[i][body.attribute.toLowerCase()] = body.value;
+                                console.log(characters[i][body.attribute.toLowerCase()])
+                            }
+                        }
+                    }
+                    // console.log(Object.keys(characters[0]).join(','));
+                    writeCharacters(characters, (err) => {
+                        if (err) {
+                            res.statusCode = 500;
+                            res.end('Internal Server Error');
+                        } else {
+                            res.statusCode = 200;
+                            res.end('Character added successfully');
+                        }
+                    });
+                });
+
+            });
+        }
+    }else {
         var filePath = path.join(__dirname, 'sign-in.html');
 
         if (path.normalize(req.url) != '/') {
